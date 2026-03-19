@@ -126,7 +126,7 @@
   }
 
   .blog-content h3 {
-    @apply text-xl md:text-[1.55rem] font-semibold font-display tracking-tight text-foreground/88 mt-10 mb-4;
+    @apply text-xl md:text-[1.55rem] font-semibold font-display tracking-tight text-foreground/90 mt-10 mb-4;
     line-height: 1.2;
     scroll-margin-top: 100px;
   }
@@ -151,7 +151,7 @@
 
   /* Better paragraph spacing */
   .blog-content p {
-    @apply mb-5 text-foreground/88;
+    @apply mb-5 text-foreground/90;
     line-height: 1.85;
   }
 
