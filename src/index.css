@@ -151,17 +151,17 @@
     @apply mb-6 leading-relaxed text-foreground/90;
   }
 
-  /* Improved list styling - tighter spacing */
+  /* Improved list styling - ultra tight spacing */
   .blog-content ul {
-    @apply mb-6 space-y-1 list-disc pl-6;
+    @apply mb-3 list-disc pl-6;
   }
 
   .blog-content ol {
-    @apply mb-6 space-y-1 list-decimal pl-6;
+    @apply mb-3 list-decimal pl-6;
   }
 
   .blog-content li {
-    @apply text-foreground/90 leading-snug;
+    @apply text-foreground/90 text-base leading-snug my-0.5;
   }
 
   /* Better code block styling */
@@ -305,6 +305,7 @@
   /* Auto-detect Bengali script and apply font */
   .blog-content {
     font-family: 'Anek Bangla', 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    font-size: 1.05rem;
   }
 
   /* Better inline media */
