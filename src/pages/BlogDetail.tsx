@@ -512,81 +512,93 @@ export default function BlogDetail() {
 
       {/* Content */}
       <article className="container mx-auto px-4 pb-16">
-        <div className="max-w-6xl mx-auto flex gap-10">
-          <div className="flex-1 max-w-3xl">
-            {/* Meta */}
+        <div className="max-w-5xl mx-auto flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-12">
+          <div className="min-w-0 flex-1 lg:max-w-[44rem]">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-8"
+              className="rounded-[2rem] border border-border/70 bg-card/70 px-6 py-8 shadow-[0_18px_50px_-40px_rgba(15,23,42,0.45)] backdrop-blur-sm sm:px-8 md:px-10 md:py-10"
             >
-              {blog.tag && (
-                <Badge variant="secondary" className="mb-4">
-                  {blog.tag}
-                </Badge>
-              )}
-              <h1 className="font-display font-bold text-3xl md:text-4xl lg:text-5xl mb-6">
-                {blog.headline}
-              </h1>
-              
-              {/* Author & Date */}
-              <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  {blog.writer_avatar ? (
-                    <img
-                      src={blog.writer_avatar}
-                      alt={blog.writer}
-                      className="w-8 h-8 rounded-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                      <User className="h-4 w-4 text-primary" />
+              <div className="mx-auto max-w-[40rem]">
+                {/* Meta */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-sm text-muted-foreground"
+                >
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+                    {blog.tag && (
+                      <Badge variant="secondary" className="bg-secondary/80 text-foreground/80">
+                        {blog.tag}
+                      </Badge>
+                    )}
+
+                    <div className="flex items-center gap-1.5">
+                      <Calendar className="h-4 w-4" />
+                      <span>
+                        {new Date(blog.published_at).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
+                      </span>
                     </div>
-                  )}
-                  <span className="font-medium text-foreground">{blog.writer}</span>
-                </div>
-                
-                <div className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>
-                    {new Date(blog.published_at).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </span>
-                </div>
-                
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
-                  <span>{blog.reading_time} min read</span>
-                </div>
+
+                    <div className="flex items-center gap-1.5">
+                      <Clock className="h-4 w-4" />
+                      <span>{blog.reading_time} min read</span>
+                    </div>
+                  </div>
+
+                  <h1 className="mt-6 font-display text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl">
+                    {blog.headline}
+                  </h1>
+                  
+                  {/* Author */}
+                  <div className="mt-6 flex items-center gap-3 border-b border-border/70 pb-6">
+                    {blog.writer_avatar ? (
+                      <img
+                        src={blog.writer_avatar}
+                        alt={blog.writer}
+                        className="h-12 w-12 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                        <User className="h-5 w-5 text-primary" />
+                      </div>
+                    )}
+                    <div>
+                      <p className="font-medium text-foreground">{blog.writer}</p>
+                      <p className="text-sm text-muted-foreground">Author</p>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Excerpt */}
+                {blog.excerpt && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="mt-6"
+                  >
+                    <p className="text-lg leading-8 text-foreground/70 md:text-[1.35rem]">
+                      {blog.excerpt}
+                    </p>
+                  </motion.div>
+                )}
+
+                {/* Main Content */}
+                <motion.div
+                  ref={contentRef}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="blog-content mt-10"
+                  dangerouslySetInnerHTML={{ __html: processedContent.html }}
+                />
               </div>
             </motion.div>
-
-            {/* Excerpt */}
-            {blog.excerpt && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="mb-8"
-              >
-                <p className="text-lg text-muted-foreground italic border-l-4 border-primary pl-4">
-                  {blog.excerpt}
-                </p>
-              </motion.div>
-            )}
-
-            {/* Main Content */}
-            <motion.div
-              ref={contentRef}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="blog-content"
-              dangerouslySetInnerHTML={{ __html: processedContent.html }}
-            />
 
             {/* Related articles */}
             {relatedBlogs.length > 0 && (
@@ -614,19 +626,25 @@ export default function BlogDetail() {
 
           {/* Table of contents */}
           {tocHeadings.length > 0 && (
-            <aside className="hidden lg:block w-72 shrink-0 sticky top-24 self-start pl-6 border-l border-border max-h-[calc(100vh-8rem)] overflow-y-auto scrollbar-hide">
-              <div className="p-2">
-                <div className="flex items-center gap-2 mb-2">
+            <aside className="hidden lg:block lg:w-64 lg:shrink-0 lg:sticky lg:top-24 lg:self-start">
+              <div className="max-h-[calc(100vh-8rem)] overflow-y-auto rounded-2xl border border-border/60 bg-background/80 px-5 py-5 shadow-[0_18px_40px_-38px_rgba(15,23,42,0.4)] backdrop-blur-sm scrollbar-hide">
+                <div className="flex items-center gap-2 mb-3">
                   <List className="h-4 w-4 text-muted-foreground" />
-                  <h3 className="text-sm font-semibold text-muted-foreground">On this page</h3>
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                    On this page
+                  </h3>
                 </div>
-                <nav className="space-y-1">
+                <nav className="space-y-2.5">
                   {tocHeadings.map((h) => (
                     <a
                       key={h.id}
                       href={`#${h.id}`}
-                      className={`block text-sm hover:text-primary transition-colors ${
-                        h.level === 2 ? 'font-medium' : 'pl-3 text-muted-foreground'
+                      className={`block transition-colors hover:text-foreground ${
+                        h.level === 2
+                          ? 'text-sm font-medium text-foreground/75'
+                          : h.level === 3
+                          ? 'pl-3 text-sm text-muted-foreground'
+                          : 'pl-5 text-[13px] text-muted-foreground/90'
                       }`}
                     >
                       {h.text}
